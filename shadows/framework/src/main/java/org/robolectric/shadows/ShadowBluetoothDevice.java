@@ -2,6 +2,7 @@ package org.robolectric.shadows;
 
 import static android.bluetooth.BluetoothDevice.BOND_NONE;
 import static android.os.Build.VERSION_CODES.JELLY_BEAN_MR2;
+import static android.os.Build.VERSION_CODES.O;
 import static org.robolectric.shadow.api.Shadow.directlyOn;
 
 import android.bluetooth.BluetoothDevice;
@@ -145,5 +146,11 @@ public class ShadowBluetoothDevice {
   protected BluetoothGatt connectGatt(
       Context context, boolean autoConnect, BluetoothGattCallback callback) {
     return ShadowBluetoothGatt.newInstance(realBluetoothDevice);
+  }
+
+  @Implementation(minSdk = O)
+  protected BluetoothGatt connectGatt(
+      Context context, boolean autoConnect, BluetoothGattCallback callback, int transport) {
+    return connectGatt(context, autoConnect, callback);
   }
 }

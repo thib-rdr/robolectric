@@ -11,6 +11,7 @@ import android.bluetooth.BluetoothGatt;
 import android.content.Context;
 import android.os.Build;
 import org.robolectric.RuntimeEnvironment;
+import org.robolectric.annotation.Implementation;
 import org.robolectric.annotation.Implements;
 import org.robolectric.shadow.api.Shadow;
 
@@ -64,5 +65,10 @@ public class ShadowBluetoothGatt {
     } catch (ClassNotFoundException e) {
       throw new RuntimeException(e);
     }
+  }
+
+  @Implementation(minSdk = JELLY_BEAN_MR2)
+  protected boolean connect() {
+    return true;
   }
 }

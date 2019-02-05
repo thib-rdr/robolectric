@@ -23,4 +23,12 @@ public class ShadowBluetoothGattTest {
     BluetoothGatt bluetoothGatt = ShadowBluetoothGatt.newInstance(bluetoothDevice);
     assertThat(bluetoothGatt).isNotNull();
   }
+
+  @Test
+  @Config(minSdk = JELLY_BEAN_MR2)
+  public void connect_returnsTrue() throws Exception {
+    BluetoothDevice bluetoothDevice = ShadowBluetoothDevice.newInstance(MOCK_MAC_ADDRESS);
+    BluetoothGatt bluetoothGatt = ShadowBluetoothGatt.newInstance(bluetoothDevice);
+    assertThat(bluetoothGatt.connect()).isTrue();
+  }
 }

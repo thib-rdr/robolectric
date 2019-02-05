@@ -4,6 +4,7 @@ import static android.bluetooth.BluetoothDevice.BOND_BONDED;
 import static android.bluetooth.BluetoothDevice.BOND_NONE;
 import static android.bluetooth.BluetoothDevice.DEVICE_TYPE_CLASSIC;
 import static android.os.Build.VERSION_CODES.JELLY_BEAN_MR2;
+import static android.os.Build.VERSION_CODES.O;
 import static com.google.common.truth.Truth.assertThat;
 import static org.robolectric.Shadows.shadowOf;
 
@@ -97,6 +98,19 @@ public class ShadowBluetoothDeviceTest {
     assertThat(
             bluetoothDevice.connectGatt(
                 ApplicationProvider.getApplicationContext(), false, new BluetoothGattCallback() {}))
+        .isNotNull();
+  }
+
+  @Test
+  @Config(minSdk = O)
+  public void connectGatt_withTransport_doesntCrash() throws Exception {
+    BluetoothDevice bluetoothDevice = ShadowBluetoothDevice.newInstance(MOCK_MAC_ADDRESS);
+    assertThat(
+            bluetoothDevice.connectGatt(
+                ApplicationProvider.getApplicationContext(),
+                false,
+                new BluetoothGattCallback() {},
+                BluetoothDevice.TRANSPORT_LE))
         .isNotNull();
   }
 
